@@ -1,124 +1,88 @@
-#include <stdio.h>
-#define SIZE 10
-int items[SIZE];
-int front = -1, rear = -1,choice;
-
-int isfull() 
+#include<stdio.h>
+#include<stdlib.h>
+#define N 5
+int front=-1,rear=-1;
+int queue[N];
+void enqueue(int x)
 {
-	if ((front == rear + 1) || (front == 0 && rear == SIZE - 1))
+	if((front==-1)&&(rear==-1))
 	{
-		return 1;
+		front=rear=0;
+		queue[rear]=x;
 	}
-  	return 0;
+	else if((rear+1)%N==front)
+	{
+		printf("\nQueue overflow\n");
+	}
+	else
+	{
+		rear=(rear+1)%N;
+		queue[rear]=x;
+	}
 }
-
-int isempty() 
+void dequeue()
 {
-	if (front == -1)
+	if((front==-1)&&(rear==-1))
 	{
-		return 1;
+		printf("\nQueue  underflow\n");
 	}
- 	return 0;
+	else if(front==rear)
+	{
+		printf("The dequeud element is %d\n",queue[front]);
+		front=-1;
+		rear=-1;
+	}
+	else
+	{
+		printf("\n The dequeued element is %d\n",queue[front]);
+		front=(front+1)%N;
+	}
 }
-
-void enqueue() 
+void display()
 {
-	int num;
-	printf("\nEnter the element: \n");
-	scanf("%d",&num);
-	if (isfull())
+	int i=front;
+	if((front==-1)&&(rear==-1))
 	{
-		printf("\n Queue is full \n");
+		printf("\n Queue is underflow\n");
 	}
-  	else 
+	else
 	{
-		if (front == -1)
+		printf("\nElements in queue\n");
+		for(i=front;i<=rear;i++)
 		{
-			front = 0;
+			printf("%d\t",queue[i]);
+			
 		}
-    		rear = (rear + 1) % SIZE;
-    		items[rear] = num;
-    		printf("\n Inserted -> %d \n", num);
-  	}
-}
-
-void dequeue() 
-{
-	int num;
-  	if (isempty()) 
-	{
-    	printf("\n Queue is empty \n");
-  	} 
-  	else 
-	{
-    		num = items[front];
-    		if (front == rear) 
-		{
-      			front = -1;
-      			rear = -1;
-    		}
-    		else 
-		{
-      			front = (front + 1) % SIZE;
-    		}
-    		printf("\n Deleted element -> %d \n", num);
-  	}
-}
-
-void display() 
-{
-	int i;
-  	if (isempty())
-	{
-    		printf(" \n Queue is empty\n");
 	}
-  	else 
-	{
-    		printf("\n Front -> %d ", front);
-    		printf("\n Items -> ");
-    		for (i = front; i != rear; i = (i + 1) % SIZE) 
-		{
-     	 		printf("%d\t", items[i]);
-   		}
-		printf("%d", items[i]);
-    		printf("\n Rear -> %d \n", rear);
-  	}
 }
-
 void main()
 {
-	while(choice!=4)
-	
+	int choice,x;
+	do
 	{
-		printf("\n1.Enqueue \n2.Dequeue \n3.Display \n4.Exit\n");
-		printf("Enter your choice: ");
+		printf("\n\nenter your choice\n1.Insertion\n2.Deletion\n3.Display\n4.Display Front and Rear\n5.Exit\n\n");
 		scanf("%d",&choice);
 		switch(choice)
 		{
-			case 1:
-				{
-					enqueue();
-					break;
-				}
-			case 2:
-				{
-					dequeue();
-					break;
-				}
-			case 3:
-				{
-					display();
-					break;
-				}
-			case 4:
-				{
-					printf("Exiting the stack\n");
-					break;
-				}
-			default:
-				{
-					printf("\nEnter a valid choice\n");
-				}
+		case 1:
+			printf("Enter the element to be inserted\n");
+			scanf("%d",&x);
+			enqueue(x);
+			break;
+		case 2:
+			dequeue();
+			break;
+		case 3:
+			display();
+			break;
+		case 4:
+			printf("Front and rear is: %d\t\t%d",queue[front],queue[rear]);
+			break;
+		case 5:
+			exit(0);
+		default :
+			printf("Invalid choice!!!\n");
+			break;
 		}
-	}
+	}while(choice!=0);
 }
