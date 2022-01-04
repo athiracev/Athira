@@ -1,109 +1,96 @@
 #include<stdio.h>
-int stack[100],i,j,choice,n,top=-1;
+#include<stdlib.h>
 void push();
 void pop();
-void peek();
-void display();
+void Top();
+void Display();
 
-void main()
-{
-	printf("Enter the limit of stack: ");
-	scanf("%d",&n);
-	printf("\n");
-	while(choice!=5)
-	{
-		printf("\n1.Push \n2.Pop \n3.Peek \n4.Display \n5.Exit \n");
-		printf("Enter your choice: ");
-		scanf("%d",&choice);
-		switch(choice)
-		{
-			case 1:
-				{
-					push();
-					break;
-				}
-			case 2:
-				{
-					pop();
-					break;
-				}
-			case 3:
-				{
-					peek();
-					break;
-				}
-			case 4:
-				{
-					display();
-					break;
-				}
-			case 5:
-				{
-					printf("\nExiting the stack\n");
-					break;
-				}
-			default:
-				{
-					printf("\nEnter a valid choice\n");
-				}
-		}
-	}
-}
+#define N 5
+int stack[N];
+int top=-1;
 
 void push()
 {
-	int val;
-	if(top == n)
+	int item;	
+	printf("Enter the data\n");
+	scanf("%d",&item);
+	if(top==N-1)
 	{
-		printf("\nOverflow \n");
+		printf("\noverflow\n");
 	}
 	else
 	{
-		printf("\nEnter the value: ");
-		scanf("%d",&val);
-		top=top+1;
-		stack[top]=val;
-		printf("\nValue Pushed \n");
+		top++;
+		stack[top]=item;
 	}
 }
-
 void pop()
 {
-	if(top == -1)
+	int item;
+	if(top==-1)
 	{
-		printf("\nUnderflow \n");
+		printf("\nunderflow\n");
 	}
 	else
 	{
-		printf("\nPoped element is %d \n",stack[top]);
-		top=top-1;
+		item=stack[top];
+		top--;
+		printf("\n %d is popped item from stack",item);
 	}
 }
-
-void peek()
+void Top()
 {
-	if(top == -1)
+	if(top==-1)
 	{
-		printf("\nStack is empty ");
-	}
+		printf("stack is empty\n");
+	}	
 	else
 	{
-		printf("\nTop of stack is %d \n",stack[top]);
-	} 
+		printf("%d",stack[top]);
+	}
 }
-
-void display()
+void Display()
 {
-	if(top == -1)
+	int i;
+	if(top==-1)
 	{
-		printf("\n Stack is empty \n");
+		printf("\nunderflow\n");
 	}
 	else
 	{
-		printf("\nElements of stack is:\n");
+		printf("\n stack elements are  ");
 		for(i=top;i>=0;i--)
 		{
-			printf("%d \n",stack[i]);
+			printf("\n%d",stack[i]);
 		}
 	}
+}
+void main()
+{
+	int ch;
+	do
+	{
+		printf("\n1.push\n2.pop\n3.Display\n4.Top\n5.Exit\n");
+		printf("Enter your choice\n");
+		scanf("%d",&ch);
+		switch(ch)
+		{
+		case 1:
+			push();
+			break;
+		case 2:
+			pop();
+			break;
+		case 3:
+			Display();
+			break;
+		case 4:
+			Top();
+			break;
+		case 5:
+			exit(0);
+		default :
+			printf("Invalid!!!");
+		}
+	}while(ch!=0);
 }
